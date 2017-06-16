@@ -4,10 +4,12 @@ import backup_helper
 import sys
 
 import setup
+import version
 
 
 def print_options():
     print("Please type a number:")
+    print("Hint: call 'h [number]' to skip this dialog.")
     print("1 : apt upgrade")
     print("2 : Backup ...")
     print("3 : ssh raspi")
@@ -29,12 +31,6 @@ def read_number():
         wrong_input()
 
 
-def ssh_tu():
-    print("Please choose a client (1 - 3)")
-    client = read_number()
-    os.system("ssh vp94hyso@clientssh" + str(client) + ".rbg.informatik.tu-darmstadt.de -X")
-
-
 def call_option(option: int):
     if option == 1:
         os.system("sudo apt full-upgrade; sudo apt autoremove; sudo apt autoclean")
@@ -48,14 +44,30 @@ def call_option(option: int):
     if option == 6:
         os.system("gksudo /opt/lampp/manager-linux-x64.run")
     if option == 7:
-        ssh_tu()
+        print("Please choose a client (1 - 3)")
+        client = read_number()
+        os.system("ssh vp94hyso@clientssh" + str(client) + ".rbg.informatik.tu-darmstadt.de -X")
+    if option == 8:
+        setup.check_for_update()
+        setup.check_global_accessibility()
 
 
 # def main():
-setup.check_for_update()
-setup.check_global_accessibility()
-print_options()
-option = read_number()
-call_option(option)
-sys.exit()
+if len(sys.argv) == 1: #do standard
+    print_options()
+    option = read_number()
+    call_option(option)
+else:
+    arg = sys.argv[1]
+    if arg == "-v" or arg == "--version":
+        print("version: " + str(version.__version__))
+
+    try:
+        int(arg)
+        call_option(int(arg))
+    except ValueError:
+        print("wrong input...")
+
+
+
 
