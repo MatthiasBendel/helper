@@ -66,6 +66,9 @@ else:
     if arg == "-u" or arg == "--update":
         setup.update()
         sys.exit()
+    if arg == "-i" or arg == "--install":
+        setup.install()
+        sys.exit()
 
     try:
         int(arg)
