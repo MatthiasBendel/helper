@@ -16,8 +16,9 @@ def print_options():
     print("5 : Frequently used programs")
     print("6 : XAMPP")
     print("7 : ssh vp94hyso@clientssh1.rbg.informatik.tu-darmstadt.de -X ...")
-    print("-v or --version")
+    print("-i or --install")
     print("-u or --update")
+    print("-v or --version")
 
 
 def wrong_input():
