@@ -1,29 +1,30 @@
 #!/usr/bin/env python3
 
 import os.path
-import sys
-
 import input_analyzer
 import version
-import urllib
 
-INSTALL_PATH = "/usr/local/bin/h"
+EXEC_PATH = "/usr/local/bin/h"
+INSTALL_PATH = "/opt/helper/helper.py"
 ONLINE_VERSION_FILE = "https://raw.githubusercontent.com/MatthiasBendel/helper/master/version.py"
 
 
-def initialize():
-    if not os.path.isfile(INSTALL_PATH):
-        print("Do you want to make this file global executable? (Y/N)"
-              "Hint: First move the file where you want to leave it.")
-        input = sys.stdin.readline()
-        input = input.strip()
+def install():
+    os.system("sudo git clone https://github.com/MatthiasBendel/helper.git /opt/helper")
+    check_global_accessibility()
 
-        if input == 'Y' or input == 'y':
-            os.system("sudo ln -s " + os.path.realpath(__file__) + " " + INSTALL_PATH)
-            print("This file was linked to " + INSTALL_PATH)
-            # if not os.access(INSTALL_PATH, os.X_OK):
-            os.system("sudo chmod +x " + INSTALL_PATH)
-            print("Type h to run this.\n")
+
+def check_global_accessibility():
+    try:
+        if not os.path.isfile(EXEC_PATH):
+            if input_analyzer.ask_bool_question("Do you want to make this file global executable?"):
+                os.system("sudo ln -s " + INSTALL_PATH + " " + EXEC_PATH)
+                print("helper.py is linked to " + EXEC_PATH)
+                # if not os.access(INSTALL_PATH, os.X_OK):
+                os.system("sudo chmod +x " + EXEC_PATH)
+                print("Execute h to run this.\n")
+    except():
+        print("Couldn't check for global accessibility...")
 
 
 def download_file():
@@ -52,5 +53,4 @@ def check_for_update():
     except():
         print("Can't check for updates. Try again next time.")
 
-
-
+install()

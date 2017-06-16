@@ -53,7 +53,7 @@ def call_option(option: int):
 
 # def main():
 setup.check_for_update()
-setup.initialize()
+setup.check_global_accessibility()
 print_options()
 option = read_number()
 call_option(option)
