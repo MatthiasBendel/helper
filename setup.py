@@ -2,6 +2,8 @@
 
 import os.path
 import sys
+
+import input_analyzer
 import version
 import urllib
 
@@ -35,21 +37,20 @@ def is_up_to_date():
     file = download_file()
     online_version = float(file[16:19])
     is_up_to_date = version.__version__ == online_version
-    if is_up_to_date:
-        return True
-    else:
+    if not is_up_to_date:
         print("There is a new version available.\n"
               "Current version: " + str(version.__version__) + "\n"
-                                                               "New version:\t " + str(online_version))
-        return False
+              "New version:\t " + str(online_version))
+    return is_up_to_date
 
 
 def check_for_update():
     try:
         if not is_up_to_date():
-            print("Do you want to update now? (Y / N)")
+            if input_analyzer.ask_bool_question("Do you want to update now?"):
+                os.system("git pull")
     except():
         print("Can't check for updates. Try again next time.")
 
 
-print(check_for_update())
+
