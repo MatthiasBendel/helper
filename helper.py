@@ -16,7 +16,8 @@ def print_options():
     print("5 : Frequently used programs")
     print("6 : XAMPP")
     print("7 : ssh vp94hyso@clientssh1.rbg.informatik.tu-darmstadt.de -X ...")
-    print("")
+    print("-v or --version")
+    print("-u or --update")
 
 
 def wrong_input():
@@ -61,10 +62,15 @@ else:
     arg = sys.argv[1]
     if arg == "-v" or arg == "--version":
         print("version: " + str(version.__version__))
+        sys.exit()
+    if arg == "-u" or arg == "--update":
+        setup.update()
+        sys.exit()
 
     try:
         int(arg)
         call_option(int(arg))
+        sys.exit()
     except ValueError:
         print("wrong input...")
 

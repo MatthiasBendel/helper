@@ -45,12 +45,15 @@ def is_up_to_date():
     return is_up_to_date
 
 
+def update():
+    os.system("git pull")
+
+
 def check_for_update():
     try:
         if not is_up_to_date():
             if input_analyzer.ask_bool_question("Do you want to update now?"):
-                os.system("git pull")
+                update()
     except():
         print("Can't check for updates. Try again next time.")
 
-install()
