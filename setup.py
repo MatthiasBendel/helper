@@ -3,8 +3,10 @@
 import os.path
 import sys
 import version
+import urllib
 
 INSTALL_PATH = "/usr/local/bin/h"
+ONLINE_VERSION_FILE = "https://raw.githubusercontent.com/MatthiasBendel/helper/master/version.py"
 
 
 def initialize():
@@ -21,6 +23,33 @@ def initialize():
             os.system("sudo chmod +x " + INSTALL_PATH)
             print("Type h to run this.\n")
 
-def is_up_to_date(): bool
-    actual_version = 
-    if version.__version__ == actual_version
+
+def download_file():
+    import httplib2
+    h = httplib2.Http(".cache")
+    resp, content = h.request(ONLINE_VERSION_FILE, "GET")
+    return str(content)
+
+
+def is_up_to_date():
+    file = download_file()
+    online_version = float(file[16:19])
+    is_up_to_date = version.__version__ == online_version
+    if is_up_to_date:
+        return True
+    else:
+        print("There is a new version available.\n"
+              "Current version: " + str(version.__version__) + "\n"
+                                                               "New version:\t " + str(online_version))
+        return False
+
+
+def check_for_update():
+    try:
+        if not is_up_to_date():
+            print("Do you want to update now? (Y / N)")
+    except():
+        print("Can't check for updates. Try again next time.")
+
+
+print(check_for_update())
