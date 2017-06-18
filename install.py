@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import os
 import sys
 #  - - - What the user should do - - -
 # 1. download helper-master.zip
@@ -9,9 +9,10 @@ import sys
 import zipfile
 
 # import setup
-import setup
 
-installation_path = "/opt/helper_test"
+installation_path = "/opt/helper/"
+exec_path = "/usr/local/bin/h"
+main_path = "helper-master/helper.py"
 
 while True:
     try:
@@ -21,8 +22,17 @@ while True:
         break
     except PermissionError as permission_error:
         print(permission_error)
-        print("Please specify the installation path:")
+        print("Please specify the installation path (ending with /):")
         installation_path = sys.stdin.readline().strip()
 
 print("Files where moved to " + installation_path)
-setup.check_global_accessibility()
+
+# make it global executable
+try:
+    os.remove(exec_path)
+    os.system("sudo ln -s " + installation_path + main_path + " " + exec_path)
+    print(installation_path + main_path + " is linked to " + exec_path)
+    os.system("sudo chmod +x " + exec_path)
+    print("Execute h to run this.\n")
+except():
+    print("Couldn't check for global accessibility...")
