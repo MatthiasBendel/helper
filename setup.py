@@ -1,26 +1,32 @@
 #!/usr/bin/env python3
 
 import os.path
+import shutil
+import zipfile
+
 import input_analyzer
 import version
 
 EXEC_PATH = "/usr/local/bin/h"
-INSTALL_PATH = "/opt/helper/helper.py"
+INSTALL_PATH = "/opt/helper/"
 ONLINE_VERSION_FILE = "https://raw.githubusercontent.com/MatthiasBendel/helper/master/version.py"
+
+# 1. download helper-master.zip
+# 2. unzip setup.py in same folder
+# 3. cd in this folder and run "python3 setup.py"
+# => files are in INSTALL_PATH and main is global executable by "h"
 
 
 def install():
-    os.system("sudo git clone https://github.com/MatthiasBendel/helper.git /opt/helper")
-    check_global_accessibility()
+    pass
 
 
 def check_global_accessibility():
     try:
         if not os.path.isfile(EXEC_PATH):
             if input_analyzer.ask_bool_question("Do you want to make this file global executable?"):
-                os.system("sudo ln -s " + INSTALL_PATH + " " + EXEC_PATH)
+                os.system("sudo ln -s " + INSTALL_PATH + "helper.py " + EXEC_PATH)
                 print("helper.py is linked to " + EXEC_PATH)
-                # if not os.access(INSTALL_PATH, os.X_OK):
                 os.system("sudo chmod +x " + EXEC_PATH)
                 print("Execute h to run this.\n")
     except():

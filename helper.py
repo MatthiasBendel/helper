@@ -65,7 +65,7 @@ else:
         print("version: " + str(version.__version__))
         sys.exit()
     if arg == "-u" or arg == "--update":
-        setup.update()
+        setup.check_for_update()
         sys.exit()
     if arg == "-i" or arg == "--install":
         setup.install()
