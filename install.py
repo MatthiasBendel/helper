@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 
+import sys
 #  - - - What the user should do - - -
 # 1. download helper-master.zip
 # 2. unzip setup.py in same folder
 # 3. cd in this folder and run "python3 setup.py"
 # => files are in INSTALL_PATH and main is global executable by "h"
-import os
-import shutil
 import zipfile
-import sys
 
 # import setup
 import setup
