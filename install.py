@@ -57,17 +57,22 @@ def extract_zip(extract_path, archive_path="/tmp/helper/master.zip"):
 
     print("Files where moved to " + extract_path)
 
-path = download_zip()
-extract_zip(installation_path, path[0] + path[1])
-remove_archive(path[0])
+
+def install():
+    path = download_zip()
+    extract_zip(installation_path, path[0] + path[1])
+    remove_archive(path[0])
 
 
-# make it global executable
-try:
-    os.remove(exec_path)
-    os.system("sudo ln -s " + installation_path + main_path + " " + exec_path)
-    print(installation_path + main_path + " is linked to " + exec_path)
-    os.system("sudo chmod +x " + exec_path)
-    print("Execute h to run this.\n")
-except():
-    print("Couldn't check for global accessibility...")
+    # make it global executable
+    try:
+        os.remove(exec_path)
+        os.system("sudo ln -s " + installation_path + main_path + " " + exec_path)
+        print(installation_path + main_path + " is linked to " + exec_path)
+        os.system("sudo chmod +x " + exec_path)
+        print("Execute h to run this.\n")
+    except():
+        print("Couldn't check for global accessibility...")
+
+if __name__ == '__main__':
+    install()
