@@ -3,7 +3,7 @@ import os
 import backup_helper
 import sys
 
-import setup
+import updater
 import version
 
 
@@ -16,7 +16,6 @@ def print_options():
     print("5 : Frequently used programs")
     print("6 : XAMPP")
     print("7 : ssh vp94hyso@clientssh1.rbg.informatik.tu-darmstadt.de -X ...")
-    print("-i or --install")
     print("-u or --update")
     print("-v or --version")
 
@@ -49,9 +48,7 @@ def call_option(option: int):
         print("Please choose a client (1 - 3)")
         client = read_number()
         os.system("ssh vp94hyso@clientssh" + str(client) + ".rbg.informatik.tu-darmstadt.de -X")
-    if option == 8:
-        setup.check_for_update()
-        setup.check_global_accessibility()
+
 
 
 # def main():
@@ -65,11 +62,9 @@ else:
         print("version: " + str(version.__version__))
         sys.exit()
     if arg == "-u" or arg == "--update":
-        setup.check_for_update()
+        updater.check_for_update()
         sys.exit()
-    if arg == "-i" or arg == "--install":
-        setup.install()
-        sys.exit()
+
 
     try:
         int(arg)
