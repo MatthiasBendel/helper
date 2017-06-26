@@ -5,19 +5,24 @@ import sys
 
 import updater
 import version
+from module import UpdateModule
+from module import Module
+
+
+modules = UpdateModule(), Module
 
 
 def print_options():
     print("Please type a number:")
     print("Hint: call 'h [number]' to skip this dialog.")
-    print("1 : apt upgrade")
+    print("-u or --update")
+    print("-v or --version\n")
+    print("1 : " + modules[0].get_description())
     print("2 : Backup ...")
     print("3 : ssh raspi")
     print("5 : Frequently used programs")
     print("6 : XAMPP")
     print("7 : ssh vp94hyso@clientssh1.rbg.informatik.tu-darmstadt.de -X ...")
-    print("-u or --update")
-    print("-v or --version")
 
 
 def wrong_input():
@@ -34,7 +39,7 @@ def read_number():
 
 def call_option(option: int):
     if option == 1:
-        os.system("sudo apt full-upgrade; sudo apt autoremove; sudo apt autoclean")
+        modules[0].run()
     if option == 2:
         backup_h = backup_helper.BackupHelper()
         backup_h.main()
@@ -50,29 +55,27 @@ def call_option(option: int):
         os.system("ssh vp94hyso@clientssh" + str(client) + ".rbg.informatik.tu-darmstadt.de -X")
 
 
+def main():
+    if len(sys.argv) == 1:  # do standard
+        print_options()
+        option = read_number()
+        call_option(option)
+    else:
+        arg = sys.argv[1]
+        if arg == "-v" or arg == "--version":
+            print("version: " + str(version.__version__))
+            sys.exit()
+        if arg == "-u" or arg == "--update":
+            updater.check_for_update()
+            sys.exit()
 
-# def main():
-if len(sys.argv) == 1: #do standard
-    print_options()
-    option = read_number()
-    call_option(option)
-else:
-    arg = sys.argv[1]
-    if arg == "-v" or arg == "--version":
-        print("version: " + str(version.__version__))
-        sys.exit()
-    if arg == "-u" or arg == "--update":
-        updater.check_for_update()
-        sys.exit()
-
-
-    try:
-        int(arg)
-        call_option(int(arg))
-        sys.exit()
-    except ValueError:
-        print("wrong input...")
+        try:
+            int(arg)
+            call_option(int(arg))
+            sys.exit()
+        except ValueError:
+            print("wrong input...")
 
 
-
-
+if __name__ == '__main__':
+    main()
