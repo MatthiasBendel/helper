@@ -8,14 +8,8 @@ import input_analyzer
 import install
 import version
 
-EXEC_PATH = "/usr/local/bin/h"
 INSTALL_PATH = "/opt/helper/"
 ONLINE_VERSION_FILE = "https://raw.githubusercontent.com/MatthiasBendel/helper/master/version.py"
-
-# 1. download helper-master.zip
-# 2. unzip updater.py in same folder
-# 3. cd in this folder and run "python3 updater.py"
-# => files are in INSTALL_PATH and main is global executable by "h"
 
 
 def get_online_version():
