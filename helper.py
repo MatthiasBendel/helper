@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import os
 import backup_helper
 import sys
@@ -61,15 +62,22 @@ def main():
         option = read_number()
         call_option(option)
     else:
-        arg = sys.argv[1]
-        if arg == "-v" or arg == "--version":
-            print("version: " + str(version.__version__))
-            sys.exit()
-        if arg == "-u" or arg == "--update":
+        parser = argparse.ArgumentParser()
+        parser.add_argument("update", help="update this helper")
+        parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
+        parser.add_argument("--version", help="output version information and exit", action="store_true")
+        args = parser.parse_args()
+
+        if args.update == "update":
             updater.check_for_update()
             sys.exit()
-
+        if args.version:
+            print("version: " + str(version.__version__))
+            sys.exit()
+        if args.verbose:
+            print("verbosity turned on, but that's not implemented...")
         try:
+            arg = sys.argv[1]
             int(arg)
             call_option(int(arg))
             sys.exit()
