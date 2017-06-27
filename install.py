@@ -63,16 +63,22 @@ def install():
     extract_zip(installation_path, path[0] + path[1])
     remove_archive(path[0])
 
-
     # make it global executable
     try:
-        os.remove(exec_path)
+        if os.path.exists(exec_path):
+            output = os.subprocess.check_output("ls -l /usr/local/bin/h", shell=True)
+            if ask_bool_question("h exists already:\n" + output + "\nDo you want to overwrite it?"):
+                os.remove(exec_path)
+            else:
+                print("Okay, h stays untouched.")
+                sys.exit()
         os.system("sudo ln -s " + installation_path + main_path + " " + exec_path)
         print(installation_path + main_path + " is linked to " + exec_path)
         os.system("sudo chmod +x " + exec_path)
         print("Execute h to run this.\n")
-    except():
+    except PermissionError as pe:
         print("Couldn't check for global accessibility...")
+        print(pe)
 
 if __name__ == '__main__':
     install()
