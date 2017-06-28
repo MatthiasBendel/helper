@@ -66,7 +66,7 @@ def install():
     # make it global executable
     try:
         if os.path.exists(exec_path):
-            output = os.subprocess.check_output("ls -l /usr/local/bin/h", shell=True)
+            output = os.popen("ls -l /usr/local/bin/h").read()
             if ask_bool_question("h exists already:\n" + output + "\nDo you want to overwrite it?"):
                 os.remove(exec_path)
             else:
