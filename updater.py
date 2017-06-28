@@ -20,7 +20,7 @@ def get_online_version():
 
 
 def update():   # remove old installation and copy the updated version again to the same path
-    installation_path = sys.argv[0]
+    installation_path = os.path.realpath(sys.argv[0])
     path, file = install.download_zip()
     install.extract_zip(installation_path, path + file)
 
