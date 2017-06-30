@@ -10,6 +10,7 @@ import sys
 import zipfile
 
 # import setup
+from distutils.util import strtobool
 from urllib.request import urlretrieve
 
 installation_path = "/opt/helper/"
@@ -18,10 +19,11 @@ main_path = "helper-master/helper.py"
 global_archive_path = "https://github.com/MatthiasBendel/helper/archive/master.zip"
 
 
-def ask_bool_question(question: str):  # copied from input_analyzer
-    print(question + " (Y/N)")
+def ask_bool_question(question: str):
+    """This function is copied from input_analyzer.py. It's located here to use this file without dependencies."""
+    print(question + " [y/n]")
     answer = sys.stdin.readline().strip()
-    return answer == 'Y' or answer == 'y'
+    return bool(strtobool(answer))
 
 
 def remove_archive(path):
@@ -79,6 +81,7 @@ def install():
     except PermissionError as pe:
         print("Couldn't check for global accessibility...")
         print(pe)
+
 
 if __name__ == '__main__':
     install()
