@@ -12,9 +12,7 @@ modules = UpdateModule(), StartOSModule()
 
 
 def print_options():
-    print("Please type a number:")
     print("Hint: call 'h [number]' to skip this dialog.")
-
     i = 1
     for module in modules:
         print(str(i) + "\t" + module.get_description())
@@ -29,6 +27,8 @@ def print_options():
     print(str(i) + "\tXAMPP")
     i += 1
     print(str(i) + "\tssh vp94hyso@clientssh1.rbg.informatik.tu-darmstadt.de -X ...")
+
+    print("Please type a number:")
 
 
 def wrong_input():

@@ -78,6 +78,8 @@ def install():
         print(installation_path + main_path + " is linked to " + exec_path)
         os.system("sudo chmod +x " + exec_path)
         print("Execute h to run this.\n")
+        print("removing " + sys.argv[0] + " ...")
+        os.remove(sys.argv[0])
     except PermissionError as pe:
         print("Couldn't check for global accessibility...")
         print(pe)
