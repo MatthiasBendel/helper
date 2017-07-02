@@ -19,3 +19,16 @@ class UpdateModule(Module):
     def get_description(self):
         return "apt upgrade and clean up"
 
+
+class StartOSModule(Module):
+    # has to identical to the grub name. See 'man grub-reboot' for details.
+    os_name = "Windows 10 (auf /dev/sda2)"
+
+    def run(self):
+        print("setting os for next start...")
+        os.system("sudo grub-reboot '" + self.os_name + "'")
+        print("reboot...")
+        os.system("sudo reboot")
+
+    def get_description(self):
+        return "start " + self.os_name

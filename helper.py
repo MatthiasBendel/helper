@@ -1,29 +1,34 @@
 #!/usr/bin/env python3
 import argparse
 import os
-import backup_helper
 import sys
 
+import backup_helper
 import updater
 import version
-from module import UpdateModule
-from module import Module
+from module import UpdateModule, StartOSModule
 
-
-modules = UpdateModule(), Module
+modules = UpdateModule(), StartOSModule()
 
 
 def print_options():
     print("Please type a number:")
     print("Hint: call 'h [number]' to skip this dialog.")
-    print("-u or --update")
-    print("-v or --version\n")
-    print("1 : " + modules[0].get_description())
-    print("2 : Backup ...")
-    print("3 : ssh raspi")
-    print("5 : Frequently used programs")
-    print("6 : XAMPP")
-    print("7 : ssh vp94hyso@clientssh1.rbg.informatik.tu-darmstadt.de -X ...")
+
+    i = 1
+    for module in modules:
+        print(str(i) + "\t" + module.get_description())
+        i += 1
+
+    print(str(i) + "\tBackup ...")
+    i += 1
+    print(str(i) + "\tssh raspi")
+    i += 1
+    print(str(i) + "\tFrequently used programs")
+    i += 1
+    print(str(i) + "\tXAMPP")
+    i += 1
+    print(str(i) + "\tssh vp94hyso@clientssh1.rbg.informatik.tu-darmstadt.de -X ...")
 
 
 def wrong_input():
@@ -39,18 +44,19 @@ def read_number():
 
 
 def call_option(option: int):
-    if option == 1:
-        modules[0].run()
-    if option == 2:
+    if option <= modules.__len__():
+        modules[option-1].run()
+
+    if option == modules.__len__()+1:
         backup_h = backup_helper.BackupHelper()
         backup_h.main()
-    if option == 3:
+    if option == modules.__len__()+2:
         os.system("ssh raspi")
-    if option == 5:
+    if option == modules.__len__()+3:
         os.system("cd ~/Dokumente/Installation/; ./Programme_installieren_1.3.sh")
-    if option == 6:
+    if option == modules.__len__()+4:
         os.system("gksudo /opt/lampp/manager-linux-x64.run")
-    if option == 7:
+    if option == modules.__len__()+5:
         print("Please choose a client (1 - 3)")
         client = read_number()
         os.system("ssh vp94hyso@clientssh" + str(client) + ".rbg.informatik.tu-darmstadt.de -X")
