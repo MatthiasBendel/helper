@@ -1,8 +1,16 @@
 import sys
 import os
 
+from module import Module
 
-class BackupHelper:
+
+class BackupModule(Module):
+    def run(self):
+        self.main()
+
+    def get_description(self):
+        return "Backup ..."
+
     def print_options(self):
         print("Welches Backup soll durchgeführt werden?")
         print("1 : Backup von matze@raspi nach ~/Archiv/Backup/ (exclude ~/Backup)")
@@ -50,4 +58,3 @@ class BackupHelper:
         self.print_options()
         option = self.read_number()
         self.call_option(option)
-        # sys.exit()

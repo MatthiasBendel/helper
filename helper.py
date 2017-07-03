@@ -7,8 +7,9 @@ import backup_helper
 import updater
 import version
 from module import UpdateModule, StartOSModule
+from backup_helper import BackupModule
 
-modules = UpdateModule(), StartOSModule()
+modules = UpdateModule(), StartOSModule(), BackupModule()
 
 
 def print_options():
@@ -18,8 +19,6 @@ def print_options():
         print(str(i) + "\t" + module.get_description())
         i += 1
 
-    print(str(i) + "\tBackup ...")
-    i += 1
     print(str(i) + "\tssh raspi")
     i += 1
     print(str(i) + "\tFrequently used programs")
@@ -48,15 +47,12 @@ def call_option(option: int):
         modules[option-1].run()
 
     if option == modules.__len__()+1:
-        backup_h = backup_helper.BackupHelper()
-        backup_h.main()
-    if option == modules.__len__()+2:
         os.system("ssh raspi")
-    if option == modules.__len__()+3:
+    if option == modules.__len__()+2:
         os.system("cd ~/Dokumente/Installation/; ./Programme_installieren_1.3.sh")
-    if option == modules.__len__()+4:
+    if option == modules.__len__()+3:
         os.system("gksudo /opt/lampp/manager-linux-x64.run")
-    if option == modules.__len__()+5:
+    if option == modules.__len__()+4:
         print("Please choose a client (1 - 3)")
         client = read_number()
         os.system("ssh vp94hyso@clientssh" + str(client) + ".rbg.informatik.tu-darmstadt.de -X")
