@@ -32,11 +32,14 @@ def wrong_input():
 
 
 def read_number():
-    user_input = sys.stdin.readline()
     try:
+        user_input = sys.stdin.readline()
         return int(user_input)
     except ValueError:
         wrong_input()
+    except KeyboardInterrupt:
+        print()
+        sys.exit()
 
 
 def call_option(option: int):
@@ -77,7 +80,6 @@ def main():
             arg = sys.argv[1]
             int(arg)
             call_option(int(arg))
-            sys.exit()
         except ValueError:
             print("wrong input...")
 
