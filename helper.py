@@ -5,11 +5,8 @@ import sys
 
 import updater
 import version
-from module import UpdateModule, StartOSModule, SshModule
+from module import UpdateModule, StartOSModule, SshModule, modules
 from backup_helper import BackupModule
-
-modules = UpdateModule(), StartOSModule("Windows 10 (auf /dev/sda2)"), BackupModule(), SshModule("raspi")
-
 
 def print_options():
     print("Hint: call 'h [number]' to skip this dialog.")
