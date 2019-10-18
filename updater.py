@@ -17,13 +17,14 @@ def get_online_version():
     h = httplib2.Http(".cache")
     resp, content = h.request(ONLINE_VERSION_FILE, "GET")
     online_version = str(content, 'utf-8')[14:]
-    return version.__version__ == online_version, online_version
+    return version.__version__ == float(online_version), online_version
 
 
 def update():   # remove old installation and copy the updated version again to the same path
     installation_path = os.path.realpath(sys.argv[0])
     path, file = install.download_zip()
     install.extract_zip(installation_path, path + file)
+    # todo offer git update
 
 
 def check_for_update():
