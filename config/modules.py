@@ -17,6 +17,13 @@ class Module:
 
 from backup_helper import BackupModule
 
+class ShellModule(Module):
+    def run(self):
+        os.system("h")
+
+    def get_description(self):
+        return "This as a shell script."
+
 
 class UpdateModule(Module):
     def run(self):
@@ -61,4 +68,5 @@ get_modules = UpdateModule(), \
               StartOSModule("Windows 10 (auf /dev/sda2)"), \
               BackupModule(), \
               SshModule("raspi"), \
-              JetbrainsModule()
+              JetbrainsModule(), \
+              ShellModule()
