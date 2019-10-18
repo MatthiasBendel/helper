@@ -7,10 +7,12 @@ import install
 import updater
 import version
 from config.modules import get_modules
+import version
+       
 
 
 def print_options():
-    print("Hint: call 'h [number]' to skip this dialog.")
+    print("Hint: call 'h [number]' to skip this dialog. (version {0})".format(version.__version__))
     i = 1
     for module in get_modules:
         print(str(i) + "\t" + module.get_description())
