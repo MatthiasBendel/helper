@@ -13,14 +13,15 @@ import zipfile
 from distutils.util import strtobool
 from urllib.request import urlretrieve
 
-installation_path = "/opt/helper/"
+installation_path = "~/bin/"
 exec_path = "/usr/local/bin/h"
 main_path = "helper-master/helper.py"
 global_archive_path = "https://github.com/MatthiasBendel/helper/archive/master.zip"
 
 
-def ask_bool_question(question: str):
+def ask_bool_question(question):
     """This function is copied from input_analyzer.py. It's located here to use this file without dependencies."""
+    assert isinstance(question, str)
     print(question + " [y/n]")
     answer = sys.stdin.readline().strip()
     return bool(strtobool(answer))
@@ -86,13 +87,14 @@ def install():
             else:
                 print("Okay, h stays untouched.")
                 sys.exit()
-        os.system("sudo ln -s " + installation_path + main_path + " " + exec_path)
+        os.system("sudo ln -s -f " + installation_path + main_path + " " + exec_path)
         print(installation_path + main_path + " is linked to " + exec_path)
         os.system("sudo chmod +x " + exec_path)
         print("Execute h to run this.\n")
         offer_module_installation()
-        print("removing " + sys.argv[0] + " ...")
-        os.remove(sys.argv[0])
+       # if ask_bool_question("Remove installation script?"):
+        #    print("removing " + sys.argv[0] + " ...")
+         #   os.remove(sys.argv[0])
     except PermissionError as pe:
         print("Couldn't check for global accessibility...")
         print(pe)
