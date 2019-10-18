@@ -1,7 +1,6 @@
 import sys
-import os
 
-from module import Module
+from config.modules import Module
 
 
 class BackupModule(Module):

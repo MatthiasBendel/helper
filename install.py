@@ -60,6 +60,18 @@ def extract_zip(extract_path, archive_path="/tmp/helper/master.zip"):
     print("Files where moved to " + extract_path)
 
 
+def offer_module_installation():
+    try:
+        from config import install_modules
+        for module in install_modules.get_modules:
+            if ask_bool_question("Do you want to install " + module.get_description()):
+                module.run()
+    except ImportError as ie:
+        print(ie)
+        if ask_bool_question("Do you want to try again?"):
+            os.system("h -i")   # run this again with installed context
+
+
 def install():
     path = download_zip()
     extract_zip(installation_path, path[0] + path[1])
@@ -78,6 +90,7 @@ def install():
         print(installation_path + main_path + " is linked to " + exec_path)
         os.system("sudo chmod +x " + exec_path)
         print("Execute h to run this.\n")
+        offer_module_installation()
         print("removing " + sys.argv[0] + " ...")
         os.remove(sys.argv[0])
     except PermissionError as pe:

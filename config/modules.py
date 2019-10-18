@@ -1,8 +1,8 @@
 import os
 from abc import abstractmethod
-from urllib.request import urlretrieve
 
 import updater
+from config.install_modules import JetbrainsModule
 
 
 class Module:
@@ -54,23 +54,11 @@ class SshModule(Module):
         return "ssh " + self.host
 
 
-class JetbrainsModule(Module):
-    def get_description(self):
-        return "Jetbrains-Toolbox"
-
-    def run(self):
-        os.system("/opt/jetbrains-toolbox")
-
-    @staticmethod
-    def install():
-        """ Downloads Jetbrains-Toolbox to /opt/jetbrains-toolbox (needs root access)"""
-        urlretrieve("https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.4.2492.tar.gz",
-                    "/opt/jetbrains-toolbox")
 
 
 # These are the modules which are shown when starting the helper script!
-modules = UpdateModule(), \
-          StartOSModule("Windows 10 (auf /dev/sda2)"), \
-          BackupModule(), \
-          SshModule("raspi"), \
-          JetbrainsModule()
+get_modules = UpdateModule(), \
+              StartOSModule("Windows 10 (auf /dev/sda2)"), \
+              BackupModule(), \
+              SshModule("raspi"), \
+              JetbrainsModule()
