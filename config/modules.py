@@ -19,7 +19,7 @@ from backup_helper import BackupModule
 
 class ShellModule(Module):
     def run(self):
-        os.system("h")
+        os.system("h.sh")
 
     def get_description(self):
         return "This as a shell script."
@@ -32,6 +32,14 @@ class UpdateModule(Module):
 
     def get_description(self):
         return "apt upgrade, clean up & update this helper"
+
+
+class AppUpdateModule(Module):
+    def run(self):
+        updater.check_for_update()
+
+    def get_description(self):
+        return "update this helper"
 
 
 class StartOSModule(Module):
@@ -69,4 +77,5 @@ get_modules = UpdateModule(), \
               BackupModule(), \
               SshModule("raspi"), \
               JetbrainsModule(), \
-              ShellModule()
+              ShellModule(), \
+              AppUpdateModule()
